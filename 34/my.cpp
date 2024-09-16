@@ -1,3 +1,4 @@
+#pragma GCC optimize(3)
 #include <bits/stdc++.h>
 #include <sstream>
 #define Problem1 1
@@ -217,10 +218,21 @@ int main()
     {
         for (int j = 0; j < 20000; j++)
         {
-            for (int k = 0; k <= j; k++)
+            dp_first_storage[i][j] = dp_first_storage[i - 1][j];
+            for (int k = 0; k <= item_num[i]; k++)
             {
-                dp_first_storage[i][j] = std ::max(dp_first_storage[i][j], dp_first_storage[i - 1][j - k] + dp[i][k]);
+                int k_new = b[i] + c[i] * k;
+                if (k_new > j)
+                {
+                    break;
+                }
+                dp_first_storage[i][j] = std ::max(dp_first_storage[i][j], dp_first_storage[i - 1][j - k_new] + dp[i][k_new]);
             }
+
+            // for (int k = 0; k <= j; k++)
+            // {
+            //     dp_first_storage[i][j] = std ::max(dp_first_storage[i][j], dp_first_storage[i - 1][j - k] + dp[i][k]);
+            // }
             if (dp_first_storage[i][j] > v)
             {
                 break;
